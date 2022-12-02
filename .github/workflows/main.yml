@@ -1,28 +1,15 @@
 on: pull_request
 
 jobs:
-- name: Run java checkstyle
-  uses: nikitasavinov/checkstyle-action@0.6.0
-  with:
-    # GITHUB_TOKEN.
-    github_token: # optional, default is ${{ github.token }}
-    # Report level for reviewdog [info,warning,error]
-    level: # optional, default is info
-    # Reporter of reviewdog command [github-pr-check,github-pr-review]
-    reporter: # optional, default is github-pr-check
-    # Filtering for the reviewdog command [added,diff_context,file,nofilter]. Default is `added`.
-
-    filter_mode: # optional, default is added
-    # Exit code for reviewdog when errors are found [true,false]. Default is `false`.
-
-    fail_on_error: # optional, default is false
-    # Checkstyle config file
-    checkstyle_config: # default is google_checks.xml
-    # Checkstyle version
-    checkstyle_version: # optional, default is 10.3
-    # Working directory relative to the root directory.
-    workdir: # optional, default is .
-    # Tool name to use for reviewdog reporter
-    tool_name: # optional, default is reviewdog
-    # Properties file relative to the root directory.
-    properties_file: # optional, default is 
+  checkstyle_job:
+    runs-on: ubuntu-latest
+    name: Checkstyle job
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run check style
+      uses: nikitasavinov/checkstyle-action@0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        reporter: 'github-pr-check'
+        tool_name: 'testtool'
